@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>watermark.js - watermarks in the browser</title>
+  <title>I dunno, Victoria's Watermarker</title>
   <script src="/scripts/watermark.js"></script>
   <script src="/scripts/upload.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Josefin+Slab|Maven+Pro' rel='stylesheet' type='text/css'>
@@ -16,11 +16,14 @@
 <body>
   <div class="container">
 
-    <h1 class="text-center"><a href="/">Watermarker</a></h1>
+    <h1 class="text-center"><a href="/">I dunno, Victoria's Watermarker</a></h1>
 
 
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-offset-1 col-md-12" id="preview">
+        <h2 class="text" style="margin-top:0">Preview</h2>
+      </div>
+      <div class="col-md-2">
         <form action="" id="uploadForm" method="POST" style="margin-top: 45px;">
           <div class="input-group">
             <span class="input-group-btn">
@@ -34,60 +37,27 @@
             Select the image to watermark
           </span>
           <div class="input-group">
-            <span class="input-group-btn">
-              <span id="watermark-button" type="button" class="btn btn-primary btn-file" disabled>
-                Browse&hellip; <input type="file" id="watermark">
-              </span>
-            </span>
-            <input type="text" class="form-control" id="watermark-name" readonly>
+            <h3>Watermark</h3>
+                <div class="radio">
+                  <label><input type="radio" name="type" value="./img/sold.png" >Sold</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" name="type" value="./img/leased.png">Leased</label>
+                </div>
+                <div class="radio">
+                  <label><input type="radio" name="type" value="./img/purchased.png">Purchased</label>
+                </div>
+                <button id="download" type="submit" class="btn btn-default">Download</button>
           </div>
-          <span class="help-block">
-            Select the watermark image
-          </span>
-          <div class="input-group">
-            <h3>Position</h3>
-            <div class="row">
-              <div class="col-xs-6">
-                <div class="radio">
-                  <label><input type="radio" name="position" value="lowerRight" checked disabled>Lower Right</label>
-                </div>
-                <div class="radio">
-                  <label><input type="radio" name="position" value="lowerLeft" disabled>Lower Left</label>
-                </div>
-                <div class="radio">
-                  <label><input type="radio" name="position" value="upperRight" disabled>Upper Right</label>
-                </div>
-              </div>
-              <div class="col-xs-6">
-                <div class="radio">
-                  <label><input type="radio" name="position" value="upperLeft" disabled>Upper Left</label>
-                </div>
-                <div class="radio">
-                  <label><input type="radio" name="position" value="center" disabled>Center</label>
-                </div>
-              </div>
-            </div>
-          </div>
+          <br>
 
-          <button id="upload" type="submit" class="btn btn-default">Download</button>
 
-          <div class="progress" id="progress" style="margin-top: 20px; visibility: hidden;">
-            <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 0%">
-            </div>
-          </div>
-          <p id="complete" style="display: none;">
-            upload complete!
-          </p>
-          <p id="error" style="display: none;">
-            there was an error uploading
-          </p>
 
         </form>
-      </div>
-      <div class="col-md-offset-1 col-md-7" id="preview">
-        <h2 class="text" style="margin-top:0">Preview</h2>
-      </div>
+
+
     </div>
+  </div>
 </body>
 
 </html>

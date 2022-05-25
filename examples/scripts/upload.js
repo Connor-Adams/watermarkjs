@@ -34,7 +34,6 @@
    * A listener that fires when the target image is selected
    */
   function setTarget(file) {
-    enableFields(['watermark-button']);
     Array.prototype.forEach.call(document.querySelectorAll('input[type=radio]'), function (radio) {
       radio.removeAttribute('disabled');
     });
@@ -49,17 +48,20 @@
   /**
    * A listener that fires when the watermark image has been selected
    */
-  function setWatermark(file) {
+  function setWatermark() {
     var preview = document.getElementById('preview'),
         img = document.getElementById('target').files[0],
-        position = document.querySelector('input[type=radio]:checked').value;
+        position = 'center';
 
     if (! original) {
       original = img;
     }
 
-    watermark([original, file])
-      .image(watermark.image[position](0.5))
+    var watermrk = document.querySelector('input[name=type]:checked').value;
+    console.log(watermrk);
+
+    watermark([original, watermrk])
+      .image(watermark.image[position](0.75))
       .then(function(marked) {
 
         resetPreviewImage();
@@ -75,26 +77,21 @@
       {
           imageTag.remove();
           original = null;
-          setWatermark(document.getElementById("watermark").files[0]);
+          setWatermark(document.querySelector('input[name=type]:checked').value);
 
       }
   }
 
-  /**
-   * Check if the watermark has been selected
-   */
-  function isWatermarkSelected() {
-    var watermark = document.getElementById('watermark-name');
-    return !!watermark.value;
-  }
 
-  function upload(onProgress, onComplete, onError) {
+  function download() {
 
     var img = document.querySelector('#preview img');
 
     watermark([img])
       .blob(function(target) { return target; })
       .then(function(blob) {
+
+      console.log(blob);
 
         const imageURL = URL.createObjectURL(blob)
         const link = document.createElement('a')
@@ -112,6 +109,8 @@
    */
   document.addEventListener('DOMContentLoaded', function () {
 
+    document.getElementById("download").addEventListener("click", download());
+
     /**
      * Handle file selections and position choice
      */
@@ -120,11 +119,12 @@
 
       if (input.type === 'file') {
         setText(input);
-        input.id === 'target' ? setTarget(input.files[0]) : setWatermark(input.files[0]);
+        input.id === 'target' ? setTarget(input.files[0]) : setWatermark();
       }
 
-      if (input.type === 'radio' && isWatermarkSelected()) {
-        setWatermark(document.getElementById('watermark').files[0]);
+      if (input.type === 'radio' && true) {
+        setWatermark();
+
       }
     });
 
@@ -134,25 +134,8 @@
      */
     var form = document.getElementById('uploadForm');
     form.addEventListener('submit', function (e) {
-      var progress = document.getElementById('progress'),
-          bar = progress.querySelector('.progress-bar'),
-          complete = document.getElementById('complete'),
-          err = document.getElementById('error');
 
-      progress.style.visibility = 'visible';
-
-      upload(function(e) {
-        if (e.lengthComputable) {
-          var percent = (e.loaded / e.total) * 100;
-          bar.style.width = percent + "%";
-        }
-      }, function () {
-        complete.style.display = 'block';
-        err.style.display = 'none';
-      }, function () {
-        err.style.display = 'block';
-        complete.style.display = 'none';
-      });
+      download();
 
       e.preventDefault();
     });

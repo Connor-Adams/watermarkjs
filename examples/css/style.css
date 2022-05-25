@@ -11,7 +11,7 @@ a:active {
 
 html,
 body {
-  background: url('img/purple.jpg') repeat left top;
+  background: #000;
   font-family: 'Maven Pro', sans-serif;
 }
 
